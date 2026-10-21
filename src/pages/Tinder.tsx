@@ -126,7 +126,7 @@ export default function Tinder() {
                     {cat.idadeEstimada ?? "Idade não informada"} · {cat.sexo} ·{" "}
                     {cat.pelagem}
                   </p>
-                  <p>{cat.descricaoCurta}</p>
+                  <p className="cat-description">{cat.historia}</p>
                   <CatPersonality cat={cat} />
                 </div>
               </div>

@@ -902,6 +902,7 @@ main {
   margin: 0 5px;
 }
 .cat-description {
+  white-space: pre-line;
   font-size: 12px;
   min-height: 43px;
   line-height: 1.7;
@@ -1286,7 +1287,7 @@ main {
 }
 .filter-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin: 20px 0 10px;
 }

@@ -130,7 +130,9 @@ export default function CatDetails() {
             <div className="profile-story-grid">
               <article className="surface">
                 <h2>Minha história</h2>
-                <p>{cat.historia}</p>
+                {cat.historia.split(/\n+/).map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
                 <h3>Cada gatinho tem seu jeitinho de ser!</h3>
                 <p>
                   Essas características são observações e podem mudar conforme
@@ -174,11 +176,16 @@ export default function CatDetails() {
                 )}
                 <small>
                   Informações desconhecidas devem ser confirmadas com a equipe.
-                  Atualização:{" "}
-                  {new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" }).format(
-                    new Date(cat.dataAtualizacao),
+                  {cat.dataAtualizacao && (
+                    <>
+                      {" "}
+                      Atualização:{" "}
+                      {new Intl.DateTimeFormat("pt-BR", {
+                        timeZone: "UTC",
+                      }).format(new Date(cat.dataAtualizacao))}
+                      .
+                    </>
                   )}
-                  .
                 </small>
               </article>
             </div>

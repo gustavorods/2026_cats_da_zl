@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { useApp } from "../hooks/AppProvider";
 import { questions } from "../data/quiz";
-import { coatImages } from "../data/cats.mock";
+import { coatImages } from "../data/coat-images";
 import type { Coat, Preferences } from "../types/cat";
 import { emptyPreferences, rankCats } from "../utils/compatibility";
 import {

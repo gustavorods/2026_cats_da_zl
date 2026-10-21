@@ -7,6 +7,7 @@ export const coats = [
   "Cinza",
   "Escaminha",
   "Rajado",
+  "Rajado e branco",
 ] as const;
 export const ages = ["Filhote", "Jovem", "Adulto", "Sênior"] as const;
 export const statuses = {
@@ -50,7 +51,7 @@ export interface Cat {
   conviveComCaes: boolean | null;
   conviveComCriancas: boolean | null;
   destaque: boolean;
-  dataAtualizacao: string;
+  dataAtualizacao: string | null;
 }
 export interface Preferences {
   sexo: Sex | null;

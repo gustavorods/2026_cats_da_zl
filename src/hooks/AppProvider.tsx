@@ -36,7 +36,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     catsService
       .list()
       .then((data) => {
-        if (active) setCats(data);
+        if (active) {
+          setCats(data);
+          const ids = new Set(data.map((cat) => cat.id));
+          setFavorites((previous) => previous.filter((id) => ids.has(id)));
+        }
       })
       .catch(() => {
         if (active) setError(true);

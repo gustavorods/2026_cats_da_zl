@@ -4,11 +4,11 @@ test("gestos para ambos os lados e desfazer preserva favorito prévio", async ({
   page,
 }) => {
   await page.addInitScript(() =>
-    localStorage.setItem("cats-da-zl:favorites:v1", '["demo-mingau"]'),
+    localStorage.setItem("cats-da-zl:favorites:v1", '["angela"]'),
   );
   await page.goto("/tinder");
   await expect(
-    page.getByRole("heading", { name: "Mingau", exact: true }),
+    page.getByRole("heading", { name: "Ângela", exact: true }),
   ).toBeVisible();
   const drag = async (direction: number) => {
     await page.locator(".swipe-card .cat-image").scrollIntoViewIfNeeded();
@@ -23,18 +23,18 @@ test("gestos para ambos os lados e desfazer preserva favorito prévio", async ({
   };
   await drag(1);
   await expect(
-    page.getByRole("heading", { name: "Amora", exact: true }),
+    page.getByRole("heading", { name: "Chester", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Desfazer última ação" }).click();
   await expect(
-    page.getByRole("heading", { name: "Mingau", exact: true }),
+    page.getByRole("heading", { name: "Ângela", exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Meus favoritos (1)" }),
   ).toBeVisible();
   await drag(-1);
   await expect(
-    page.getByRole("heading", { name: "Amora", exact: true }),
+    page.getByRole("heading", { name: "Chester", exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Meus favoritos (1)" }),

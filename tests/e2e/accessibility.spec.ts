@@ -8,7 +8,7 @@ test("contraste e semântica das telas principais", async ({ page }) => {
   for (const route of [
     "/",
     "/gatos",
-    "/gatos/mingau",
+    "/gatos/angela",
     "/match",
     "/tinder",
     "/ajudar",

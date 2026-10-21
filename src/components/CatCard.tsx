@@ -119,7 +119,7 @@ export default function CatCard({
         <p className="cat-meta">
           {cat.faixaEtaria ?? "Idade não informada"} <span>·</span> {cat.sexo}
         </p>
-        <p className="cat-description">{cat.descricaoCurta}</p>
+        <p className="cat-description">{cat.historia}</p>
         <CatPersonality cat={cat} />
         <AvailabilityBadge cat={cat} />
         <Link to={`/gatos/${cat.slug}`} className="card-link">

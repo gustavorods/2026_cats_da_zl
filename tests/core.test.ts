@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cats } from "../src/data/cats.mock";
+import { cats } from "./fixtures/cats";
 import {
   compatibility,
   emptyPreferences,
@@ -141,7 +141,9 @@ describe("WhatsApp", () => {
     expect(url.origin + url.pathname).toBe("https://wa.me/5511952685748");
     expect(url.searchParams.get("text")).toContain("Conheci a Amora");
     expect(url.searchParams.get("text")).toContain("sobre ela");
-    expect(url.searchParams.get("text")).toContain("perfil é demonstrativo");
+    expect(url.searchParams.get("text")).not.toContain(
+      "perfil é demonstrativo",
+    );
     expect(whatsappUrl(cats[2])).toContain("Pa%C3%A7oca");
   });
   it("oferece mensagem geral de adoção", () => {
@@ -158,7 +160,7 @@ describe("integridade dos dados", () => {
     for (const cat of cats) {
       for (const trait of [cat.sociabilidade, cat.brincadeira, cat.carinho])
         expect(trait === null || [0, 1, 2, 3].includes(trait)).toBe(true);
-      expect(Number.isNaN(Date.parse(cat.dataAtualizacao))).toBe(false);
+      expect(Number.isNaN(Date.parse(cat.dataAtualizacao!))).toBe(false);
     }
   });
 });

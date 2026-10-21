@@ -13,11 +13,14 @@ import {
 import { Link } from "react-router-dom";
 import { useApp } from "../hooks/AppProvider";
 import CatCard from "../components/CatCard";
-import { IS_DEMO } from "../config/site";
 import { ButtonLink, DataBoundary, SectionHeading } from "../components/ui";
 
 export default function Home() {
   const { cats } = useApp();
+  const back = cats.find((cat) => cat.slug === "mijona") ?? cats[0];
+  const front = cats.find((cat) => cat.slug === "chester") ?? cats[1];
+  const welcome = cats.find((cat) => cat.slug === "miyagi") ?? cats[2];
+  const match = cats.find((cat) => cat.slug === "mu") ?? cats[3];
   return (
     <>
       <section className="hero container">
@@ -58,10 +61,7 @@ export default function Home() {
             </span>
           </div>
         </div>
-        <div
-          className="hero-art"
-          aria-label="Composição de ilustrações demonstrativas de gatos"
-        >
+        <div className="hero-art" aria-label="Fotos dos gatinhos da colônia">
           <div className="hero-blob" />
           <Sparkles
             className="hero-sparkle"
@@ -71,21 +71,21 @@ export default function Home() {
           />
           <div className="hero-photo photo-back">
             <img
-              src="/images/cats/preto.svg"
-              alt="Ilustração de uma gatinha preta de olhos curiosos"
+              src={back?.fotos[0]?.src ?? "/images/cats/placeholder.svg"}
+              alt={back?.fotos[0]?.alt ?? "Gatinho da colônia"}
             />
             <span>
-              Amora <Heart size={16} fill="currentColor" />
+              {back?.nome} <Heart size={16} fill="currentColor" />
             </span>
           </div>
           <div className="hero-photo photo-front">
             <img
-              src="/images/cats/laranja.svg"
-              alt="Ilustração de um gato laranja de olhar carinhoso"
+              src={front?.fotos[0]?.src ?? "/images/cats/placeholder.svg"}
+              alt={front?.fotos[0]?.alt ?? "Gatinho da colônia"}
               fetchPriority="high"
             />
             <span>
-              Mingau <PawPrint size={18} />
+              {front?.nome} <PawPrint size={18} />
             </span>
           </div>
           <div className="hero-sticker">
@@ -116,7 +116,11 @@ export default function Home() {
       </div>
       <section className="container welcome section">
         <div className="welcome-illustration" aria-hidden="true">
-          <img src="/images/cats/siames-cozy.svg" alt="" loading="lazy" />
+          <img
+            src={welcome?.fotos[0]?.src ?? "/images/cats/placeholder.svg"}
+            alt=""
+            loading="lazy"
+          />
           <span>por aqui, todo carinho conta.</span>
         </div>
         <div>
@@ -164,12 +168,6 @@ export default function Home() {
                 ))}
             </div>
           </DataBoundary>
-          {IS_DEMO && (
-            <p className="demo-caption">
-              Perfis de demonstração. Os gatinhos e suas histórias são
-              fictícios.
-            </p>
-          )}
         </div>
       </section>
       <section className="container section">
@@ -195,7 +193,11 @@ export default function Home() {
           <div className="match-art" aria-hidden="true">
             <span className="match-orbit" />
             <div className="mini-match-card">
-              <img src="/images/cats/frajola.svg" alt="" loading="lazy" />
+              <img
+                src={match?.fotos[0]?.src ?? "/images/cats/placeholder.svg"}
+                alt=""
+                loading="lazy"
+              />
               <strong>O começo de uma amizade</strong>
               <span>
                 <Heart size={16} fill="currentColor" /> Tem carinho por aqui

@@ -1,4 +1,5 @@
-import type { Cat, Coat, Level, Sex, Age, Status } from "../types/cat";
+import { coatImages } from "../../src/data/coat-images";
+import type { Cat, Coat, Level, Sex, Age, Status } from "../../src/types/cat";
 
 const entries: [
   string,
@@ -157,16 +158,6 @@ const entries: [
     "Brinquedos, descobertas e uma soneca depois: sua combinação favorita.",
   ],
 ];
-export const coatImages: Record<Coat, string> = {
-  Laranja: "laranja",
-  "Padrão siamês": "siames",
-  Preto: "preto",
-  Branco: "branco",
-  Frajola: "frajola",
-  Cinza: "cinza",
-  Escaminha: "escaminha",
-  Rajado: "rajado",
-};
 const ageText: Record<Age, string> = {
   Filhote: "Cerca de 6 meses",
   Jovem: "Cerca de 1 ano",

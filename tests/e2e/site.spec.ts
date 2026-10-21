@@ -3,16 +3,24 @@ import { test, expect } from "@playwright/test";
 test("catálogo, perfil, galeria, favoritos persistentes e status", async ({
   page,
 }) => {
+  await page.addInitScript(() => {
+    if (!localStorage.getItem("cats-da-zl:favorites:v1")) {
+      localStorage.setItem("cats-da-zl:favorites:v1", '["demo-mingau"]');
+    }
+  });
   await page.goto("/gatos");
-  await expect(page.locator(".cat-card")).toHaveCount(12);
-  await page.getByLabel("Pesquisar por nome").fill("Amora");
+  await expect(page.locator(".cat-card")).toHaveCount(7);
+  await expect(
+    page.getByRole("button", { name: "Meus favoritos (0)" }),
+  ).toBeVisible();
+  await page.getByLabel("Pesquisar por nome").fill("Mijona");
   await expect(page.locator(".cat-card")).toHaveCount(1);
   await page
-    .getByRole("button", { name: "Adicionar Amora aos favoritos" })
+    .getByRole("button", { name: "Adicionar Mijona aos favoritos" })
     .click();
   await page.reload();
   await expect(
-    page.getByRole("button", { name: "Remover Amora dos favoritos" }),
+    page.getByRole("button", { name: "Remover Mijona dos favoritos" }),
   ).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Meus favoritos (1)" }).click();
   await expect(page.locator(".cat-card")).toHaveCount(1);
@@ -20,28 +28,32 @@ test("catálogo, perfil, galeria, favoritos persistentes e status", async ({
     .getByRole("link", { name: "Conhecer história", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Oi, eu sou Amora." }),
+    page.getByRole("heading", { name: "Oi, eu sou Mijona." }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Ver imagem 2 de Amora" }).click();
+  const firstPhoto = await page
+    .locator(".gallery-main img")
+    .getAttribute("src");
+  await page.getByRole("button", { name: "Ver imagem 2 de Mijona" }).click();
+  await expect(page.locator(".gallery-main img")).not.toHaveAttribute(
+    "src",
+    firstPhoto!,
+  );
   await expect(page.locator(".gallery-main img")).toHaveAttribute(
     "src",
-    /preto-cozy/,
+    /\.jpeg/,
   );
   await expect(
-    page.getByRole("link", { name: "Quero adotar Amora" }),
-  ).toHaveAttribute("href", /wa.me\/5511952685748\?text=.*Amora/);
-  await page.goto("/gatos/chico");
-  await expect(
-    page
-      .locator(".profile-actions")
-      .getByRole("link", { name: /Quero adotar/ }),
-  ).toHaveCount(0);
-  await page.goto("/gatos/aurora");
-  await expect(
-    page.getByText("Foto em breve", { exact: true }).first(),
-  ).toBeVisible();
+    page.getByRole("link", { name: "Quero adotar Mijona" }),
+  ).toHaveAttribute("href", /wa.me\/5511952685748\?text=.*Mijona/);
+  await page.goto("/gatos/miyagi");
   await expect(
     page.getByText("Idade não informada", { exact: true }).first(),
+  ).toBeVisible();
+  await expect(page.locator(".health-facts")).toContainText("Não informado");
+  await expect(page.locator(".demo-notice")).toHaveCount(0);
+  await page.goto("/gatos/inexistente");
+  await expect(
+    page.getByRole("heading", { name: "Esse gatinho não está por aqui." }),
   ).toBeVisible();
 });
 
@@ -74,13 +86,13 @@ test("quiz completo, retorno entre perguntas e nenhuma preferência", async ({
       name: "Encontramos alguns amiguinhos para você!",
     }),
   ).toBeVisible();
-  await expect(page.locator(".result-wrapper")).toHaveCount(9);
+  await expect(page.locator(".result-wrapper")).toHaveCount(7);
   await expect(page.locator(".result-affinity")).not.toContainText(["%"]);
   await page.getByRole("button", { name: "Refazer quiz" }).click();
   await page.getByRole("button", { name: "Começar quiz" }).click();
   for (const [i, label] of [
     "Macho",
-    "Laranja",
+    "Frajola",
     "3 — Muito sociável",
     "2 — Brincalhão",
     "3 — Muito carinhoso",
@@ -92,32 +104,32 @@ test("quiz completo, retorno entre perguntas e nenhuma preferência", async ({
       })
       .click();
   }
-  await expect(page.locator(".best-match")).toContainText("Mingau");
+  await expect(page.locator(".best-match")).toContainText("Mu");
   await expect(page.locator(".best-match")).toContainText(
     "100% de afinidade estimada",
   );
-  await expect(page.getByText(/Estimativa parcial/).first()).toBeVisible();
+  await expect(page.getByText(/Estimativa parcial/)).toHaveCount(0);
 });
 
 test("Tinder permite favoritar, desfazer sem perder favorito anterior, passar e recomeçar", async ({
   page,
 }) => {
   await page.goto("/tinder");
-  await page.getByRole("button", { name: "Favoritar Mingau" }).click();
+  await page.getByRole("button", { name: "Favoritar Ângela" }).click();
   await expect(
-    page.getByRole("heading", { name: "Amora", exact: true }),
+    page.getByRole("heading", { name: "Chester", exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Meus favoritos (1)" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Desfazer última ação" }).click();
   await expect(
-    page.getByRole("heading", { name: "Mingau", exact: true }),
+    page.getByRole("heading", { name: "Ângela", exact: true }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Meus favoritos (0)" }),
   ).toBeVisible();
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 7; i++) {
     await page.getByRole("button", { name: /^Passar / }).click();
     await expect(page.locator(".swipe-card.leaving")).toHaveCount(0);
   }
@@ -128,7 +140,7 @@ test("Tinder permite favoritar, desfazer sem perder favorito anterior, passar e 
   ).toBeVisible();
   await page.getByRole("button", { name: "Recomeçar", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Mingau", exact: true }),
+    page.getByRole("heading", { name: "Ângela", exact: true }),
   ).toBeVisible();
 });
 
@@ -162,7 +174,7 @@ for (const width of [320, 390, 768, 1440]) {
     for (const route of [
       "/",
       "/gatos",
-      "/gatos/mingau",
+      "/gatos/angela",
       "/match",
       "/tinder",
       "/adotar",
