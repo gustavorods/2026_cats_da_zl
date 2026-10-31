@@ -17,10 +17,17 @@ interface SiteConfig {
 export const site: SiteConfig = {
   name: "Cats da ZL",
   whatsapp: "5511952685748",
-  email: null,
-  instagram: null,
-  social: [],
-  pix: { chave: null, tipo: null, destinatario: null, qrCode: null },
+  email: "catsdazloficial@gmail.com",
+  instagram: "https://www.instagram.com/catsdazl/",
+  social: [
+    { nome: "TikTok: @catsdazl", url: "https://www.tiktok.com/@catsdazl" },
+  ],
+  pix: {
+    chave: "catsdazloficial@gmail.com",
+    tipo: "E-mail",
+    destinatario: null,
+    qrCode: null,
+  },
   team: [],
   transparency: [],
 };

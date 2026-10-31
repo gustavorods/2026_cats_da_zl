@@ -19,7 +19,6 @@ export default function Home() {
   const { cats } = useApp();
   const back = cats.find((cat) => cat.slug === "mijona") ?? cats[0];
   const front = cats.find((cat) => cat.slug === "chester") ?? cats[1];
-  const welcome = cats.find((cat) => cat.slug === "miyagi") ?? cats[2];
   const match = cats.find((cat) => cat.slug === "mu") ?? cats[3];
   return (
     <>
@@ -116,11 +115,7 @@ export default function Home() {
       </div>
       <section className="container welcome section">
         <div className="welcome-illustration" aria-hidden="true">
-          <img
-            src={welcome?.fotos[0]?.src ?? "/images/cats/placeholder.svg"}
-            alt=""
-            loading="lazy"
-          />
+          <img src="/images/colonia/carinho-conta.jpeg" alt="" loading="lazy" />
           <span>por aqui, todo carinho conta.</span>
         </div>
         <div>
@@ -214,8 +209,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="container tinder-promo">
-        <div className="tinder-promo-icon">
+      <section className="container quem-me-adota-promo">
+        <div className="quem-me-adota-promo-icon">
           <Heart size={39} strokeWidth={1.3} />
           <PawPrint size={31} />
         </div>
@@ -227,7 +222,7 @@ export default function Home() {
             seu coração.
           </p>
         </div>
-        <ButtonLink to="/tinder" secondary>
+        <ButtonLink to="/quem-me-adota" secondary>
           Explorar os gatinhos
         </ButtonLink>
       </section>

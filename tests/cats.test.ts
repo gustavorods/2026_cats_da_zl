@@ -18,7 +18,11 @@ describe("cadastros reais da colônia", () => {
     ]);
     expect(cats.map((cat) => cat.fotos.length)).toEqual([2, 3, 4, 3, 2, 3, 4]);
     for (const cat of cats) {
-      expect(cat.historia).not.toMatch(/Site:|Gênero:|Sociável:|Cor:/);
+      expect(cat.historia).not.toMatch(
+        /Site:|Gênero:|Sociável:|Cor:|Convive com/,
+      );
+      expect(cat.historia).not.toMatch(/\p{Extended_Pictographic}/u);
+      expect(cat.historia).not.toMatch(/^Adote /m);
       expect(cat.historia.length).toBeGreaterThan(300);
       expect(cat.fotos.every((photo) => photo.src.endsWith(".jpeg"))).toBe(
         true,
@@ -47,21 +51,20 @@ describe("cadastros reais da colônia", () => {
       ["Macho", "Rajado", 1, 1, 2],
       ["Fêmea", "Frajola", 1, 3, 1],
     ]);
-    expect(cats.find((cat) => cat.slug === "mu")?.historia).toMatch(
-      /Adote o Mu e leve o chefão para casa!$/,
-    );
     expect(cats.find((cat) => cat.slug === "angela")?.historia).toContain(
       "Sharlow",
     );
   });
-  it("não inventa idade, vacinação ou data de atualização", () => {
+  it("não inventa fase da vida, vacinação ou data de atualização", () => {
     for (const cat of cats) {
-      expect(cat.idadeEstimada).toBeNull();
       expect(cat.faixaEtaria).toBeNull();
       expect(cat.vacinado).toBeNull();
       expect(cat.vermifugado).toBeNull();
       expect(cat.dataAtualizacao).toBeNull();
-      expect(cat.castrado).toBe(cat.slug === "mijona" ? true : null);
+      expect(cat.castrado).toBe(true);
+      expect(cat.conviveComGatos).toBe(true);
+      expect(cat.conviveComCriancas).toBe(true);
+      expect(cat.conviveComCaes).toBeNull();
     }
   });
   it("usa os dados reais na busca e no match", () => {
@@ -78,6 +81,27 @@ describe("cadastros reais da colônia", () => {
     expect(matches[0].cat.nome).toBe("Mu");
     expect(matches[0].score).toBe(100);
     expect(rankCats(cats, emptyPreferences)).toHaveLength(7);
+  });
+  it.each([
+    ["Filhote", "Filhote"],
+    ["jovem", "Jovem"],
+    ["Adulto", "Adulto"],
+    ["senior", "Sênior"],
+  ])("lê a fase da vida %s sem incluí-la na história", (value, expected) => {
+    const cat = parseCatDescription(
+      `Gênero: Fêmea\nCor: Preto\nFase da vida: ${value}\nDescrição: Um novo relato.`,
+      "Teste",
+    );
+    expect(cat.faixaEtaria).toBe(expected);
+    expect(cat.historia).toBe("Um novo relato.");
+  });
+  it("rejeita idade numérica no campo de fase da vida", () => {
+    expect(() =>
+      parseCatDescription(
+        "Gênero: Fêmea\nCor: Preto\nFase da vida: 3 anos\nDescrição: Um novo relato.",
+        "Teste",
+      ),
+    ).toThrow(/Fase da vida inválida/);
   });
   it("aceita novos cadastros e distingue notas ausentes de zero", () => {
     const cat = parseCatDescription(

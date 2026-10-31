@@ -1,4 +1,4 @@
-import { coats, statuses } from "../types/cat";
+import { ages, coats, statuses } from "../types/cat";
 import type { Cat, Coat, Level } from "../types/cat";
 
 const normalize = (value: string) =>
@@ -63,7 +63,7 @@ export function parseCatDescription(source: string, folder: string): Cat {
   const historia = storyLines
     .filter(
       (line) =>
-        !/^(nome|g[êe]nero|sexo|cor|pelagem|status|castrad[oa]|atualiza[çc][ãa]o):/i.test(
+        !/^(nome|g[êe]nero|sexo|cor|pelagem|fase da vida|status|castrad[oa]|convive com (gatos|crian[çc]as)|atualiza[çc][ãa]o):/i.test(
           line,
         ),
     )
@@ -100,7 +100,21 @@ export function parseCatDescription(source: string, folder: string): Cat {
   const status = rawStatus ?? "disponivel";
   if (!Object.hasOwn(statuses, status))
     throw new Error(`Status inválido para ${nome}: ${status}`);
-  const castrado = field("castrado", "castrada");
+  const yesNo = (...labels: string[]): boolean | null => {
+    const value = field(...labels);
+    if (!value) return null;
+    return normalize(value) === "sim"
+      ? true
+      : normalize(value) === "nao"
+        ? false
+        : null;
+  };
+  const faseDaVida = field("fase da vida");
+  const faixaEtaria = faseDaVida
+    ? (ages.find((age) => normalize(age) === normalize(faseDaVida)) ?? null)
+    : null;
+  if (faseDaVida && !faixaEtaria)
+    throw new Error(`Fase da vida inválida para ${nome}: ${faseDaVida}`);
   return {
     id: slug,
     slug,
@@ -109,27 +123,20 @@ export function parseCatDescription(source: string, folder: string): Cat {
     pelagem,
     historia,
     descricaoCurta,
-    idadeEstimada: null,
-    faixaEtaria: null,
+    faixaEtaria,
     sociabilidade: level("sociavel"),
     brincadeira: level("brincalhao"),
     carinho: level("carinhoso"),
     fotos: [],
     status: status as Cat["status"],
-    castrado: castrado
-      ? normalize(castrado) === "sim"
-        ? true
-        : normalize(castrado) === "nao"
-          ? false
-          : null
-      : null,
+    castrado: yesNo("castrado", "castrada"),
     vacinado: null,
     vermifugado: null,
     necessidadesEspeciais: null,
     observacoesSaude: null,
-    conviveComGatos: null,
+    conviveComGatos: yesNo("convive com gatos"),
     conviveComCaes: null,
-    conviveComCriancas: null,
+    conviveComCriancas: yesNo("convive com criancas"),
     destaque: true,
     dataAtualizacao: null,
   };

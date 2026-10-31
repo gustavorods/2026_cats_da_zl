@@ -162,8 +162,8 @@ export default function Match() {
           <ButtonLink to="/gatos" secondary>
             Ver todos os gatos
           </ButtonLink>
-          <Link to="/tinder" className="text-link">
-            Explorar no Tinder dos Gatos <ArrowRight size={17} />
+          <Link to="/quem-me-adota" className="text-link">
+            Explorar no Quem Me Adota? <ArrowRight size={17} />
           </Link>
         </div>
       </div>

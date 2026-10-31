@@ -14,7 +14,7 @@ O objetivo é:
 - Promover a adoção e a guarda responsável.
 - Incentivar doações para alimentação, saúde e cuidados.
 - Conscientizar sobre abandono, castração e bem-estar animal.
-- Criar uma experiência divertida de descoberta de gatos por meio de um quiz e um sistema de cartões semelhante ao Tinder.
+- Criar uma experiência divertida de descoberta de gatos por meio de um quiz e um sistema de cartões deslizáveis chamado Quem Me Adota?.
 
 **Importante:** O Cats da ZL não é um abrigo ou centro de acolhimento. O projeto atende exclusivamente aos gatos que já pertencem à colônia. Não é permitido comunicar que recebemos ou resgatamos novos animais.
 
@@ -145,7 +145,7 @@ Adicionar animações sutis:
 - Transições entre páginas.
 - Pequena animação dos botões de favoritos.
 - Transições suaves entre perguntas do quiz.
-- Animação de cartões no Tinder dos Gatos.
+- Animação de cartões no Quem Me Adota?.
 - Feedback visual para ações do usuário.
 - Elementos decorativos flutuando suavemente, quando apropriado.
 
@@ -163,7 +163,7 @@ Implementar as seguintes rotas:
 | `/gatos` | Catálogo de gatos |
 | `/gatos/:slug` | Perfil individual do gato |
 | `/match` | Quiz de compatibilidade |
-| `/tinder` | Tinder dos Gatos |
+| `/quem-me-adota` | Quem Me Adota? |
 | `/adotar` | Como adotar |
 | `/ajudar` | Doações e outras formas de ajudar |
 | `/sobre` | Sobre o projeto |
@@ -308,7 +308,7 @@ Adicionar um pequeno aviso:
 
 "O resultado é uma sugestão baseada nas características conhecidas dos gatos. A adoção responsável envolve muito mais do que uma porcentagem!"
 
-## 5.5 Tinder dos Gatos
+## 5.5 Quem Me Adota?
 
 Título:
 
@@ -320,7 +320,7 @@ Texto:
 
 Botão:
 
-"Explorar os gatinhos" → `/tinder`
+"Explorar os gatinhos" → `/quem-me-adota`
 
 ## 5.6 Como funciona a adoção?
 
@@ -422,7 +422,7 @@ Cada gato deverá ter um cartão com:
 
 1. Foto principal.
 2. Nome em destaque.
-3. Idade aproximada ou faixa etária.
+3. Fase da vida.
 4. Sexo.
 5. Pelagem.
 6. Pequena apresentação.
@@ -491,15 +491,12 @@ Apresentar:
 - Nome.
 - Galeria de fotos.
 - Sexo.
-- Idade aproximada.
+- Fase da vida.
 - Pelagem.
 - Status de adoção.
 - História.
 - Personalidade.
 - Níveis de sociabilidade, brincadeira e carinho.
-- Observações de saúde, apenas quando informadas.
-- Informações de castração e vacinação, quando conhecidas.
-- Necessidades especiais, se houver.
 - Informações adicionais relevantes.
 
 Texto da seção de personalidade:
@@ -706,7 +703,7 @@ Adicionar:
 
 - "Refazer quiz".
 - "Ver todos os gatos".
-- "Explorar no Tinder dos Gatos".
+- "Explorar no Quem Me Adota?".
 
 Mensagem de conscientização:
 
@@ -714,7 +711,7 @@ Mensagem de conscientização:
 
 ---
 
-# 9. Tinder dos Gatos — `/tinder`
+# 9. Quem Me Adota? — `/quem-me-adota`
 
 Criar uma experiência divertida de cartões deslizáveis, inspirada na mecânica visual dos aplicativos de relacionamento, mas adaptada ao contexto de adoção responsável.
 
@@ -734,7 +731,7 @@ Cada cartão deverá exibir:
 
 - Foto grande.
 - Nome.
-- Idade aproximada.
+- Fase da vida.
 - Sexo.
 - Personalidade resumida.
 - Ícones de sociabilidade, brincadeira e carinho.
@@ -1204,7 +1201,6 @@ Documentar os seguintes campos:
 | `nome` | string | Sim |
 | `sexo` | enum | Sim |
 | `pelagem` | enum | Sim |
-| `idadeEstimada` | string ou null | Não |
 | `faixaEtaria` | enum ou null | Não |
 | `descricaoCurta` | string | Sim |
 | `historia` | string | Sim |
@@ -1380,13 +1376,13 @@ cats-da-zl/
 │   │   ├── ui/
 │   │   ├── cats/
 │   │   ├── quiz/
-│   │   └── tinder/
+│   │   └── quem-me-adota/
 │   ├── pages/
 │   │   ├── Home.tsx
 │   │   ├── Cats.tsx
 │   │   ├── CatDetails.tsx
 │   │   ├── Match.tsx
-│   │   ├── Tinder.tsx
+│   │   ├── QuemMeAdota.tsx
 │   │   ├── Adoption.tsx
 │   │   ├── Help.tsx
 │   │   ├── About.tsx
@@ -1470,7 +1466,7 @@ Regras:
 - Textos legíveis.
 - Espaçamentos proporcionais.
 - Quiz confortável em telas pequenas.
-- Tinder utilizável por toque e por clique.
+- Quem Me Adota? utilizável por toque e por clique.
 - Modal, menu e accordion acessíveis em mobile.
 
 A versão mobile não deve parecer apenas uma versão desktop comprimida.
@@ -1519,9 +1515,9 @@ Quando não houver imagem:
 
 "Foto em breve."
 
-Quando não houver idade:
+Quando a fase da vida não for informada:
 
-"Idade não informada."
+"Fase da vida não informada."
 
 Quando uma característica for desconhecida:
 
@@ -1539,7 +1535,7 @@ Nunca utilizar `undefined`, `null` ou textos técnicos visíveis para o usuário
 
 ## Favoritos
 
-Permitir que o usuário favorite gatos no catálogo, no perfil e no Tinder.
+Permitir que o usuário favorite gatos no catálogo, no perfil e no Quem Me Adota?.
 
 Manter a lista sincronizada entre páginas utilizando estado compartilhado e `localStorage`.
 
@@ -1684,7 +1680,7 @@ A implementação só estará completa quando:
 9. Os níveis de personalidade forem exibidos corretamente.
 10. O quiz tiver cinco perguntas completas.
 11. O algoritmo calcular afinidade e ordenar resultados.
-12. O Tinder permitir navegar e favoritar gatos.
+12. O Quem Me Adota? permitir navegar e favoritar gatos.
 13. Os favoritos estiverem sincronizados.
 14. Os CTAs de adoção direcionarem para o WhatsApp correto.
 15. As mensagens de adoção incluírem o nome do gato.

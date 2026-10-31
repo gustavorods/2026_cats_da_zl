@@ -16,7 +16,7 @@ interface Action {
   wasFavorite: boolean;
   liked: boolean;
 }
-export default function Tinder() {
+export default function QuemMeAdota() {
   const { cats, favorites, setFavorite, announce } = useApp();
   const available = cats.filter((c) => c.status === "disponivel");
   const [history, setHistory] = useState<Action[]>([]);
@@ -75,16 +75,16 @@ export default function Tinder() {
     else setOffset(0);
   };
   return (
-    <div className="container page tinder-page">
+    <div className="container page quem-me-adota-page">
       <PageHeading
-        eyebrow="TINDER DOS GATOS"
+        eyebrow="QUEM ME ADOTA?"
         title="Um swipe, um miau, uma nova história!"
       >
         Deslize os cartões, conheça os gatinhos e favorite aqueles que
         conquistarem seu coração.
       </PageHeading>
       <DemoNotice />
-      <div className="tinder-top">
+      <div className="quem-me-adota-top">
         <span aria-live="polite">
           {Math.min(history.length + 1, available.length)} de {available.length}{" "}
           perfis
@@ -123,7 +123,7 @@ export default function Tinder() {
                     <span>{cat.sexo === "Fêmea" ? "♀" : "♂"}</span>
                   </div>
                   <p className="cat-meta">
-                    {cat.idadeEstimada ?? "Idade não informada"} · {cat.sexo} ·{" "}
+                    {cat.faixaEtaria ?? "Fase da vida não informada"} · {cat.sexo} ·{" "}
                     {cat.pelagem}
                   </p>
                   <p className="cat-description">{cat.historia}</p>

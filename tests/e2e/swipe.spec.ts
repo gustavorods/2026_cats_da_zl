@@ -6,7 +6,7 @@ test("gestos para ambos os lados e desfazer preserva favorito prévio", async ({
   await page.addInitScript(() =>
     localStorage.setItem("cats-da-zl:favorites:v1", '["angela"]'),
   );
-  await page.goto("/tinder");
+  await page.goto("/quem-me-adota");
   await expect(
     page.getByRole("heading", { name: "Ângela", exact: true }),
   ).toBeVisible();

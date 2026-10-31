@@ -1,6 +1,6 @@
 # Dados dos gatinhos
 
-O site lê os arquivos de `src/cats/` com `import.meta.glob` do Vite. Catálogo, perfis, favoritos, match e Tinder usam a mesma fonte. A home também mostra fotos e nomes reais. Não há backend.
+O site lê os arquivos de `src/cats/` com `import.meta.glob` do Vite. Catálogo, perfis, favoritos, match e Quem Me Adota? usam a mesma fonte. A home também mostra fotos e nomes reais. Não há backend.
 
 ## Adicionar ou atualizar um gatinho
 
@@ -26,7 +26,7 @@ Status: disponivel
 Castrada: Não informado
 
 Descrição: Escreva aqui a história real do gatinho.
-Pode usar vários parágrafos e emojis.
+Pode usar vários parágrafos, sem emojis ou chamadas finais como “Adote”.
 
 Site:
 Sociável: 2/3
@@ -42,13 +42,15 @@ O nome gera o identificador e a URL sem acentos, por exemplo `Ângela` → `/gat
 
 - Gênero: Macho ou Fêmea. Os qualificadores dos relatos atuais são normalizados.
 - Cor: Laranja, Padrão siamês, Preto, Branco, Frajola, Cinza, Escaminha, Rajado ou Rajado e branco. “Tigrado”, “Tigrado branco” e “Tigrado e branco” são normalizados para as opções rajadas.
+- Fase da vida: campo opcional `Fase da vida: Adulto`, com as opções `Filhote`, `Jovem`, `Adulto` ou `Sênior`. Quando omitido, aparece como não informada. Não cadastramos idade numérica ou estimada.
 - Personalidade: notas de `0/3` a `3/3`. Omitir uma nota significa desconhecida; zero é uma observação válida. Notas fora da escala geram erro de carregamento.
-- Castrado/Castrada: `Sim`, `Não` ou `Não informado`. O campo de Mijona reproduz a informação explícita do relato.
+- Castrado/Castrada: `Sim`, `Não` ou `Não informado`. Todos os sete gatos atuais têm castração confirmada.
+- Convivência: `Convive com gatos: Sim` e `Convive com crianças: Sim` estão confirmados para todos os gatos atuais.
 - Status: `disponivel`, `em_processo`, `adotado` ou `indisponivel`.
 
-**Sem `Status:`, o cadastro é considerado disponível.** Os sete relatos recebidos não indicavam status; todos entraram com esse padrão. Confirme e atualize o campo conforme a situação de cada gato. Apenas disponíveis aparecem no match e no Tinder. Os demais continuam no catálogo, sem botão de adoção.
+**Sem `Status:`, o cadastro é considerado disponível.** Os sete relatos recebidos não indicavam status; todos entraram com esse padrão. Confirme e atualize o campo conforme a situação de cada gato. Apenas disponíveis aparecem no match e no Quem Me Adota?. Os demais continuam no catálogo, sem botão de adoção.
 
-Idade, fase da vida, vacinação, vermifugação, convivência, necessidades especiais e data de atualização não foram fornecidas e ficam como `null`. O carregador não estima esses dados pelas fotografias ou pelo tom das histórias. Para acrescentar esses campos futuramente, amplie o adaptador em `src/utils/cat-description.ts` e a cobertura em `tests/cats.test.ts`.
+A fase da vida não foi fornecida nos relatos atuais e permanece como `null`. Vacinação, vermifugação, convivência com cães, necessidades especiais e data de atualização não foram fornecidas e ficam como `null`. O carregador não estima esses dados pelas fotografias ou pelo tom das histórias. Para acrescentar esses campos futuramente, amplie o adaptador em `src/utils/cat-description.ts` e a cobertura em `tests/cats.test.ts`.
 
 ## Fotos
 
@@ -72,7 +74,7 @@ O serviço mantém a assinatura `list(): Promise<Cat[]>`, permitindo uma futura 
 
 ## Contatos e doações
 
-A configuração continua em `src/config/site.ts`: WhatsApp, e-mail, Instagram, redes sociais, equipe, Pix e transparência. Valores não fornecidos ficam vazios. O Pix só habilita cópia quando chave e destinatário estão configurados; o QR Code depende de um arquivo fornecido. Links de WhatsApp preenchem uma mensagem com o nome do gatinho, e a pessoa decide enviá-la.
+A configuração continua em `src/config/site.ts`: WhatsApp, e-mail, Instagram, redes sociais, equipe, Pix e transparência. Valores não fornecidos ficam vazios. A chave Pix oficial e o e-mail são `catsdazloficial@gmail.com`. Instagram e TikTok: `@catsdazl`. A cópia do Pix fica disponível quando há uma chave oficial; destinatário e QR Code só são exibidos quando fornecidos. Links de WhatsApp preenchem uma mensagem com o nome do gatinho, e a pessoa decide enviá-la.
 
 ## Verificação
 

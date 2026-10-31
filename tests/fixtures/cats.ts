@@ -158,12 +158,6 @@ const entries: [
     "Brinquedos, descobertas e uma soneca depois: sua combinação favorita.",
   ],
 ];
-const ageText: Record<Age, string> = {
-  Filhote: "Cerca de 6 meses",
-  Jovem: "Cerca de 1 ano",
-  Adulto: "Cerca de 3 anos",
-  Sênior: "Cerca de 10 anos",
-};
 
 /** Todos os perfis, histórias, características e estados abaixo são fictícios. */
 export const cats: Cat[] = entries.map(
@@ -188,7 +182,6 @@ export const cats: Cat[] = entries.map(
     sexo,
     pelagem,
     faixaEtaria,
-    idadeEstimada: faixaEtaria ? ageText[faixaEtaria] : null,
     descricaoCurta,
     historia: `${descricaoCurta} Nesta história fictícia, ${nome} faz parte de uma pequena colônia e está aprendendo a compartilhar a rotina com as pessoas que cuidam dela. Cada encontro acontece no seu tempo, com respeito ao seu espaço. Um ambiente seguro, paciência e cuidado fazem parte do próximo capítulo que imaginamos para ${nome}.`,
     sociabilidade,

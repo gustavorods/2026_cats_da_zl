@@ -16,8 +16,6 @@ import {
   WhatsAppButton,
 } from "../components/ui";
 import { shareLink } from "../utils/share";
-const yesNo = (value: boolean | null) =>
-  value === null ? "Não informado" : value ? "Sim" : "Não";
 export default function CatDetails() {
   const { slug } = useParams();
   const { cats, announce } = useApp();
@@ -87,10 +85,6 @@ export default function CatDetails() {
                     <dd>{cat.sexo}</dd>
                   </div>
                   <div>
-                    <dt>Idade estimada</dt>
-                    <dd>{cat.idadeEstimada ?? "Idade não informada"}</dd>
-                  </div>
-                  <div>
                     <dt>Pelagem</dt>
                     <dd>{cat.pelagem}</dd>
                   </div>
@@ -140,53 +134,36 @@ export default function CatDetails() {
                   com a equipe e respeite seu tempo.
                 </p>
               </article>
-              <article className="surface">
+              <article className="surface care-card">
                 <h2>
-                  <ShieldCheck size={23} />
+                  <ShieldCheck size={23} aria-hidden="true" />
                   Cuidado em cada detalhe
                 </h2>
                 <dl className="health-facts">
-                  {(
-                    [
-                      ["Castração", cat.castrado],
-                      ["Vacinação", cat.vacinado],
-                      ["Vermifugação", cat.vermifugado],
-                      ["Convive com gatos", cat.conviveComGatos],
-                      ["Convive com cães", cat.conviveComCaes],
-                      ["Convive com crianças", cat.conviveComCriancas],
-                    ] as const
-                  ).map(([label, value]) => (
-                    <div key={label}>
-                      <dt>{label}</dt>
-                      <dd>{yesNo(value)}</dd>
-                    </div>
-                  ))}
+                  <div>
+                    <dt>Castração</dt>
+                    <dd>
+                      {cat.castrado === null
+                        ? "Não informada"
+                        : cat.castrado
+                          ? cat.sexo === "Fêmea"
+                            ? "Castrada"
+                            : "Castrado"
+                          : "Não castrado"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Convivência</dt>
+                    <dd>
+                      {[
+                        cat.conviveComGatos && "Outros gatos",
+                        cat.conviveComCriancas && "crianças",
+                      ]
+                        .filter(Boolean)
+                        .join(" e ") || "Não informada"}
+                    </dd>
+                  </div>
                 </dl>
-                {cat.necessidadesEspeciais && (
-                  <p>
-                    <strong>Necessidades especiais:</strong>{" "}
-                    {cat.necessidadesEspeciais}
-                  </p>
-                )}
-                {cat.observacoesSaude && (
-                  <p>
-                    <strong>Observações de saúde:</strong>{" "}
-                    {cat.observacoesSaude}
-                  </p>
-                )}
-                <small>
-                  Informações desconhecidas devem ser confirmadas com a equipe.
-                  {cat.dataAtualizacao && (
-                    <>
-                      {" "}
-                      Atualização:{" "}
-                      {new Intl.DateTimeFormat("pt-BR", {
-                        timeZone: "UTC",
-                      }).format(new Date(cat.dataAtualizacao))}
-                      .
-                    </>
-                  )}
-                </small>
               </article>
             </div>
             <section className="section">

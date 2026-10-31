@@ -30,9 +30,9 @@ Os testes E2E iniciam o servidor automaticamente. `playwright.config.ts` usa o C
 | -------------- | ------------------------------------------------------------------------------ |
 | `/`            | Apresentação visual, destaques dinâmicos, match, adoção e ajuda                |
 | `/gatos`       | Busca por nome, cinco filtros, ordenação e favoritos                            |
-| `/gatos/:slug` | Galeria, história, personalidade, saúde, compartilhar e interesse via WhatsApp |
+| `/gatos/:slug` | Galeria, história, personalidade, compartilhar e interesse via WhatsApp |
 | `/match`       | Quiz de cinco perguntas e afinidade estimada                                   |
-| `/tinder`      | Cartões por gesto ou botões, favoritos, desfazer e recomeçar                   |
+| `/quem-me-adota`      | Cartões por gesto ou botões, favoritos, desfazer e recomeçar                   |
 | `/adotar`      | Etapas e adoção responsável                                                    |
 | `/ajudar`      | Pix condicionado aos dados oficiais, materiais e divulgação                    |
 | `/sobre`       | Missão, visão, valores e equipe opcional                                       |
@@ -85,14 +85,14 @@ O número `5511952685748` fica em `src/config/site.ts`. `src/utils/whatsapp.ts` 
 
 Os cadastros são carregados de `src/cats/<pasta>/desc.txt` (ou `desc`) e as fotos de `src/cats/<pasta>/photos/`. O Vite inclui os arquivos no build; não é necessário cadastrar imports por foto nem copiar arquivos para `public/`. Veja o formato e as instruções em **[data.md](./data.md)**.
 
-Idade, vacinação, vermifugação, convivência e data de atualização permanecem desconhecidas quando não fornecidas. A castração de Mijona foi transcrita do relato para o campo `Castrada: Sim`. Os perfis usam `disponivel` por padrão; o campo `Status:` permite alterar a disponibilidade. Os dados fictícios ficaram somente em `tests/fixtures/`, para testar casos como notas desconhecidas e diferentes status.
+Fase da vida, vacinação, vermifugação, convivência com cães e data de atualização permanecem desconhecidas quando não fornecidas. Todos os sete gatos têm castração e convivência com outros gatos e crianças confirmadas nos cadastros. Os relatos não contêm emojis nem chamadas finais de adoção. Os perfis usam `disponivel` por padrão; o campo `Status:` permite alterar a disponibilidade. Os dados fictícios ficaram somente em `tests/fixtures/`, para testar casos como notas desconhecidas e diferentes status.
 
-As ilustrações em `public/images/cats/` continuam nas opções de pelagem do quiz, em seções institucionais e no fallback de foto ausente. A home usa fotos reais.
+As ilustrações em `public/images/cats/` continuam nas opções de pelagem do quiz, em seções institucionais e no fallback de foto ausente. A home usa fotos reais; a foto da seção “por aqui, todo carinho conta” fica em `public/images/colonia/carinho-conta.jpeg`.
 
 As fontes Fredoka e Nunito são carregadas pelo Google Fonts e precisam de internet para seu primeiro carregamento; há fallback sans-serif. Ilustrações e funcionalidades do site são locais.
 
 ## Pendências para publicação real
 
-Revisar a disponibilidade dos animais e completar, quando fornecidos, chave Pix e destinatário, e-mail, Instagram e integrantes. O WhatsApp fornecido já está configurado. `IS_DEMO` está desativado porque os cadastros exibidos são reais.
+Revisar a disponibilidade dos animais e completar, quando fornecidos, destinatário do Pix e integrantes. WhatsApp, e-mail, Instagram, TikTok e chave Pix oficial já estão configurados. `IS_DEMO` está desativado porque os cadastros exibidos são reais.
 
 `npm run build` gera um site estático em `dist/`. A hospedagem precisa servir `index.html` para rotas como `/gatos/mijona` e `/match`. Não foram configurados domínio, hospedagem ou publicação automática.

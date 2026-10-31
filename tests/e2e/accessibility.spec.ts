@@ -10,7 +10,7 @@ test("contraste e semântica das telas principais", async ({ page }) => {
     "/gatos",
     "/gatos/angela",
     "/match",
-    "/tinder",
+    "/quem-me-adota",
     "/ajudar",
     "/duvidas",
     "/contato",

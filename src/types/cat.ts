@@ -33,7 +33,6 @@ export interface Cat {
   nome: string;
   sexo: Sex;
   pelagem: Coat;
-  idadeEstimada: string | null;
   faixaEtaria: Age | null;
   descricaoCurta: string;
   historia: string;

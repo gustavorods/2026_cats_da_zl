@@ -12,7 +12,7 @@ import { shareLink } from "../utils/share";
 import { PageHeading, WhatsAppButton } from "../components/ui";
 export default function Help() {
   const { announce } = useApp();
-  const ready = Boolean(site.pix.chave && site.pix.destinatario);
+  const ready = Boolean(site.pix.chave);
   const copy = async () => {
     if (!ready || !site.pix.chave) return;
     try {
@@ -50,7 +50,9 @@ export default function Help() {
               {ready ? "Chave Pix oficial" : "ESTAMOS PREPARANDO ESSE CANTINHO"}
             </span>
             <strong>{ready ? site.pix.chave : "Chave Pix em breve"}</strong>
-            {ready && <small>Destinatário: {site.pix.destinatario}</small>}
+            {ready && site.pix.destinatario && (
+              <small>Destinatário: {site.pix.destinatario}</small>
+            )}
           </div>
           {ready && site.pix.qrCode && (
             <img
@@ -118,10 +120,9 @@ export default function Help() {
         <div>
           <h2>Cuidado também é transparência.</h2>
           <p>
-            As contribuições são destinadas aos cuidados dos gatos da colônia.
-            Os canais de doação serão divulgados após confirmação dos dados
-            oficiais. Não há arrecadações ou relatórios financeiros publicados
-            neste momento.
+            As contribuições são destinadas aos cuidados dos gatos da colônia. A
+            chave Pix oficial está disponível acima. Não há relatórios
+            financeiros publicados neste momento.
           </p>
           {site.transparency.map((item) => (
             <a

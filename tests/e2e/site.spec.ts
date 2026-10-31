@@ -46,10 +46,17 @@ test("catálogo, perfil, galeria, favoritos persistentes e status", async ({
     page.getByRole("link", { name: "Quero adotar Mijona" }),
   ).toHaveAttribute("href", /wa.me\/5511952685748\?text=.*Mijona/);
   await page.goto("/gatos/miyagi");
+  await expect(page.locator(".facts")).toContainText("Fase da vida");
+  await expect(page.locator(".facts")).toContainText("Não informada");
+  await expect(page.locator(".facts")).not.toContainText("Idade");
   await expect(
-    page.getByText("Idade não informada", { exact: true }).first(),
+    page.getByRole("heading", { name: "Cuidado em cada detalhe" }),
   ).toBeVisible();
-  await expect(page.locator(".health-facts")).toContainText("Não informado");
+  await expect(page.locator(".health-facts > div")).toHaveCount(2);
+  await expect(page.locator(".health-facts")).toContainText("Castrado");
+  await expect(page.locator(".health-facts")).toContainText(
+    "Outros gatos e crianças",
+  );
   await expect(page.locator(".demo-notice")).toHaveCount(0);
   await page.goto("/gatos/inexistente");
   await expect(
@@ -111,10 +118,21 @@ test("quiz completo, retorno entre perguntas e nenhuma preferência", async ({
   await expect(page.getByText(/Estimativa parcial/)).toHaveCount(0);
 });
 
-test("Tinder permite favoritar, desfazer sem perder favorito anterior, passar e recomeçar", async ({
+for (const route of ["/tinder", "/encontro-felino"]) {
+  test(`${route} redireciona para Quem Me Adota?`, async ({ page }) => {
+    await page.goto(route);
+    await expect(page).toHaveURL(/\/quem-me-adota$/);
+    await expect(page).toHaveTitle("Quem Me Adota? | Cats da ZL");
+    await expect(page.locator(".page-heading .eyebrow")).toHaveText(
+      "QUEM ME ADOTA?",
+    );
+  });
+}
+
+test("Quem Me Adota? permite favoritar, desfazer sem perder favorito anterior, passar e recomeçar", async ({
   page,
 }) => {
-  await page.goto("/tinder");
+  await page.goto("/quem-me-adota");
   await page.getByRole("button", { name: "Favoritar Ângela" }).click();
   await expect(
     page.getByRole("heading", { name: "Chester", exact: true }),
@@ -144,12 +162,32 @@ test("Tinder permite favoritar, desfazer sem perder favorito anterior, passar e 
   ).toBeVisible();
 });
 
-test("doações sem dados fictícios, FAQ e erro 404", async ({ page }) => {
+test("Pix oficial, contatos, FAQ e erro 404", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/ajudar");
-  await expect(page.getByText("Chave Pix em breve")).toBeVisible();
+  await expect(page.locator(".pix-key")).toContainText(
+    "catsdazloficial@gmail.com",
+  );
   await expect(
     page.getByRole("button", { name: "Copiar chave Pix" }),
-  ).toBeDisabled();
+  ).toBeEnabled();
+  await page.getByRole("button", { name: "Copiar chave Pix" }).click();
+  await expect
+    .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+    .toBe("catsdazloficial@gmail.com");
+  const footer = page.locator("footer");
+  await expect(
+    footer.getByRole("link", {
+      name: "catsdazloficial@gmail.com",
+      exact: true,
+    }),
+  ).toHaveAttribute("href", "mailto:catsdazloficial@gmail.com");
+  await expect(
+    footer.getByRole("link", { name: "Instagram: @catsdazl" }),
+  ).toHaveAttribute("href", "https://www.instagram.com/catsdazl/");
+  await expect(
+    footer.getByRole("link", { name: "TikTok: @catsdazl" }),
+  ).toHaveAttribute("href", "https://www.tiktok.com/@catsdazl");
   await expect(page.locator(".pix-qr")).toHaveCount(0);
   await page.goto("/duvidas");
   await page
@@ -176,7 +214,7 @@ for (const width of [320, 390, 768, 1440]) {
       "/gatos",
       "/gatos/angela",
       "/match",
-      "/tinder",
+      "/quem-me-adota",
       "/adotar",
       "/ajudar",
       "/sobre",
@@ -185,6 +223,18 @@ for (const width of [320, 390, 768, 1440]) {
     ]) {
       await page.goto(route);
       await expect(page.locator("h1")).toBeVisible();
+      if (["/adotar", "/match", "/contato"].includes(route)) {
+        const art = page.locator(
+          ".adoption-art, .quiz-intro-art, .contact-art",
+        );
+        const image = await art.locator("img").boundingBox();
+        const caption = await art.locator("span").boundingBox();
+        expect(image?.width).toBeGreaterThan(150);
+        expect(image?.height).toBeGreaterThan(150);
+        expect(caption!.y).toBeGreaterThanOrEqual(image!.y);
+        expect(caption!.x).toBeGreaterThanOrEqual(0);
+        expect(caption!.x + caption!.width).toBeLessThanOrEqual(width);
+      }
       expect(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= window.innerWidth,

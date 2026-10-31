@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { ArrowUp, Cat, Heart, Menu, PawPrint, X } from "lucide-react";
+import { ArrowUp, Heart, Menu, PawPrint, X } from "lucide-react";
 import { site } from "../config/site";
 import { useApp } from "../hooks/AppProvider";
 import { DemoNotice } from "./ui";
@@ -16,7 +16,23 @@ export function Logo() {
   return (
     <Link to="/" className="logo" aria-label="Cats da ZL — início">
       <span className="logo-icon">
-        <Cat strokeWidth={1.9} size={29} />
+        <svg
+          width="29"
+          height="29"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.9"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M4 11V3l5 4a12 12 0 0 1 6 0l5-4v8c1 1.5 1 3 1 4 0 4-4 6-9 6s-9-2-9-6c0-1 0-2.5 1-4Z" />
+          <path d="M8 12v.5m8-.5v.5" />
+          <path d="m11 16 1 1 1-1m-1 1v1" />
+          <path d="m1 13 6 2m-6 2h6m10-2 6-2m-6 4h6" strokeWidth="1.4" />
+        </svg>
       </span>
       <span>
         cats
@@ -89,7 +105,7 @@ function Header() {
         {navigation
           .concat([
             ["/adotar", "Quero adotar"],
-            ["/tinder", "Tinder dos Gatos"],
+            ["/quem-me-adota", "Quem Me Adota?"],
             ["/duvidas", "Dúvidas"],
             ["/contato", "Contato"],
           ])
@@ -123,7 +139,7 @@ function Footer() {
           <h2>Encontre seu amigo</h2>
           <Link to="/gatos">Conheça os gatos</Link>
           <Link to="/match">Match Felino</Link>
-          <Link to="/tinder">Tinder dos Gatos</Link>
+          <Link to="/quem-me-adota">Quem Me Adota?</Link>
           <Link to="/adotar">Como adotar</Link>
         </div>
         <div>
@@ -141,7 +157,7 @@ function Footer() {
           {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
           {site.instagram && (
             <a href={site.instagram} target="_blank" rel="noopener noreferrer">
-              Instagram
+              Instagram: @catsdazl
             </a>
           )}
           {site.social.map((s) => (
@@ -182,7 +198,7 @@ export default function Layout() {
       "/": "Pequenas patinhas, grandes histórias",
       "/gatos": "Conheça nossos gatinhos",
       "/match": "Match Felino",
-      "/tinder": "Tinder dos Gatos",
+      "/quem-me-adota": "Quem Me Adota?",
       "/adotar": "Como adotar",
       "/ajudar": "Como ajudar",
       "/sobre": "Sobre nós",

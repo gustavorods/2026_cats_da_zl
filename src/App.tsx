@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./hooks/AppProvider";
 import Layout from "./components/Layout";
 import { LoadingSkeleton } from "./components/ui";
@@ -7,7 +7,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Cats = lazy(() => import("./pages/Cats"));
 const CatDetails = lazy(() => import("./pages/CatDetails"));
 const Match = lazy(() => import("./pages/Match"));
-const Tinder = lazy(() => import("./pages/Tinder"));
+const QuemMeAdota = lazy(() => import("./pages/QuemMeAdota"));
 const Adoption = lazy(() => import("./pages/Adoption"));
 const Help = lazy(() => import("./pages/Help"));
 const About = lazy(() => import("./pages/About"));
@@ -25,7 +25,15 @@ export default function App() {
               <Route path="gatos" element={<Cats />} />
               <Route path="gatos/:slug" element={<CatDetails />} />
               <Route path="match" element={<Match />} />
-              <Route path="tinder" element={<Tinder />} />
+              <Route path="quem-me-adota" element={<QuemMeAdota />} />
+              <Route
+                path="encontro-felino"
+                element={<Navigate to="/quem-me-adota" replace />}
+              />
+              <Route
+                path="tinder"
+                element={<Navigate to="/quem-me-adota" replace />}
+              />
               <Route path="adotar" element={<Adoption />} />
               <Route path="ajudar" element={<Help />} />
               <Route path="sobre" element={<About />} />
