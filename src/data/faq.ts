@@ -8,7 +8,7 @@ export const faq = [
     "Sim! Você pode conhecer os perfis, explorar as características de cada gatinho e demonstrar seu interesse. A disponibilidade e as próximas etapas deverão ser confirmadas com os responsáveis.",
   ],
   [
-    "O que é o Match Felino?",
+    "O que é o CatMach?",
     "É um quiz divertido que compara suas preferências com as características conhecidas dos gatos, sugerindo aqueles que podem combinar mais com você.",
   ],
   [

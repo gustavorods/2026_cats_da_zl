@@ -18,7 +18,7 @@ import { TikTokIcon } from "./TikTokIcon";
 const navigation = [
   ["/", "Início"],
   ["/gatos", "Conheça os gatos"],
-  ["/match", "Match Felino"],
+  ["/match", "CatMach"],
   ["/ajudar", "Como ajudar"],
   ["/sobre", "Sobre nós"],
   ["/adotar", "Quero adotar"],
@@ -133,7 +133,7 @@ function Footer() {
         <div>
           <h2>Encontre seu amigo</h2>
           <Link to="/gatos">Conheça os gatos</Link>
-          <Link to="/match">Match Felino</Link>
+          <Link to="/match">CatMach</Link>
           <Link to="/quem-me-adota">Quem Me Adota?</Link>
           <Link to="/adotar">Como adotar</Link>
         </div>
@@ -200,7 +200,7 @@ export default function Layout() {
     const titles: Record<string, string> = {
       "/": "Pequenas patinhas, grandes histórias",
       "/gatos": "Conheça nossos gatinhos",
-      "/match": "Match Felino",
+      "/match": "CatMach",
       "/quem-me-adota": "Quem Me Adota?",
       "/adotar": "Como adotar",
       "/ajudar": "Como ajudar",

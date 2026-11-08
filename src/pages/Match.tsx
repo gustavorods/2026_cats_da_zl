@@ -53,7 +53,7 @@ export default function Match() {
               SEU PRÓXIMO AMIGO PODE TER BIGODES
             </span>
             <h1>
-              Descubra seu <span className="pink">match felino!</span>
+              Descubra seu <span className="pink">CatMach!</span>
             </h1>
             <p>
               Todo gatinho tem uma personalidade única. Vamos te ajudar a
@@ -203,7 +203,7 @@ export default function Match() {
       <div className="quiz-top">
         <Link to="/match" onClick={reset} className="text-link">
           <PawPrint size={18} />
-          Match Felino
+          CatMach
         </Link>
         <button className="text-link" onClick={reset}>
           <RotateCcw size={16} />

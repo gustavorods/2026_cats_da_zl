@@ -178,7 +178,7 @@ export default function Home() {
           <div className="match-copy">
             <span className="eyebrow">
               <Sparkles size={16} />
-              MATCH FELINO
+              CatMach
             </span>
             <h2>
               E se o seu melhor amigo estiver a um <em>match</em> de distância?
