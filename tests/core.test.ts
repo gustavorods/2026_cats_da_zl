@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { cats } from "./fixtures/cats";
 import {
+  catsMatchingPreviousAnswers,
   compatibility,
   emptyPreferences,
   rankCats,
@@ -11,6 +12,25 @@ import { whatsappUrl } from "../src/utils/whatsapp";
 
 describe("afinidade estimada", () => {
   const mingau = cats[0];
+  it("filtra pelagens pela combinação exata das respostas anteriores", () => {
+    expect(
+      catsMatchingPreviousAnswers(cats, {
+        sexo: "Macho",
+        sociabilidade: 3,
+        brincadeira: 2,
+        carinho: 3,
+      }).map((cat) => cat.nome),
+    ).toEqual(["Mingau"]);
+    expect(
+      catsMatchingPreviousAnswers(cats, {
+        sexo: "Fêmea",
+        sociabilidade: 1,
+        brincadeira: 1,
+        carinho: 1,
+      }),
+    ).toEqual([]);
+    expect(catsMatchingPreviousAnswers(cats, emptyPreferences)).toHaveLength(9);
+  });
   it("não inventa percentuais sem preferências", () => {
     const result = compatibility(mingau, emptyPreferences);
     expect(result).toMatchObject({

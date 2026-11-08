@@ -99,10 +99,10 @@ test("quiz completo, retorno entre perguntas e nenhuma preferência", async ({
   await page.getByRole("button", { name: "Começar quiz" }).click();
   for (const [i, label] of [
     "Macho",
-    "Frajola",
     "3 — Muito sociável",
     "2 — Brincalhão",
     "3 — Muito carinhoso",
+    "Frajola",
   ].entries()) {
     await page.getByRole("radio", { name: label, exact: true }).check();
     await page
@@ -116,6 +116,58 @@ test("quiz completo, retorno entre perguntas e nenhuma preferência", async ({
     "100% de afinidade estimada",
   );
   await expect(page.getByText(/Estimativa parcial/)).toHaveCount(0);
+});
+
+test("a última pergunta mostra só a pelagem dos gatos que combinam exatamente", async ({
+  page,
+}) => {
+  await page.goto("/match");
+  await page.getByRole("button", { name: "Começar quiz" }).click();
+  for (const label of [
+    "Fêmea",
+    "2 — Sociável",
+    "2 — Brincalhão",
+    "3 — Muito carinhoso",
+  ]) {
+    await page.getByRole("radio", { name: label, exact: true }).check();
+    await page.getByRole("button", { name: "Próxima pergunta" }).click();
+  }
+  await expect(
+    page.getByRole("heading", { name: /Qual desses estilos/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("radio")).toHaveCount(1);
+  await expect(page.getByRole("radio", { name: "Branco" })).toBeVisible();
+  await expect(page.getByText(/só temos este estilo/)).toBeVisible();
+  await page.getByRole("radio", { name: "Branco" }).check();
+  await page.getByRole("button", { name: "Ver meus matches" }).click();
+  await expect(page.locator(".best-match")).toContainText("Ângela");
+  await expect(page.locator(".best-match")).toContainText(
+    "100% de afinidade estimada",
+  );
+});
+
+test("sem combinação exata, pula a pelagem e mostra afinidades próximas", async ({
+  page,
+}) => {
+  await page.goto("/match");
+  await page.getByRole("button", { name: "Começar quiz" }).click();
+  for (const label of [
+    "Fêmea",
+    "1 — Pouco sociável",
+    "1 — Pouco brincalhão",
+    "1 — Pouco carinhoso",
+  ]) {
+    await page.getByRole("radio", { name: label, exact: true }).check();
+    await page.getByRole("button", { name: "Próxima pergunta" }).click();
+  }
+  await expect(
+    page.getByRole("heading", { name: /Não encontramos gatos/ }),
+  ).toBeVisible();
+  await expect(page.getByRole("radio")).toHaveCount(0);
+  await expect(page.getByText(/pular a pergunta sobre pelagem/)).toBeVisible();
+  await page.getByRole("button", { name: "Ver meus matches" }).click();
+  await expect(page.locator(".result-wrapper")).toHaveCount(7);
+  await expect(page.getByText(/maior afinidade possível/)).toBeVisible();
 });
 
 for (const route of ["/tinder", "/encontro-felino"]) {

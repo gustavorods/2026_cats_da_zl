@@ -1,5 +1,9 @@
 node_modules/
 dist/
+/marketing/
+/scripts/capture-motion.mjs
+/scripts/render-launch.mjs
+/scripts/render-motion.mjs
 *.tsbuildinfo
 test-results/
 playwright-report/

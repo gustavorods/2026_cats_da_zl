@@ -95,13 +95,20 @@ export default function CatCard({
   adoption?: boolean;
 }) {
   return (
-    <article className="cat-card">
+    <article className={`cat-card cat-card--${cat.slug}`}>
       <div className="cat-card-visual">
         <Link
           to={`/gatos/${cat.slug}`}
           aria-label={`Conhecer a história de ${cat.nome}`}
         >
-          <CatImage cat={cat} />
+          <CatImage
+            cat={cat}
+            photo={
+              cat.slug === "miyagi" || cat.slug === "shalom-harlow"
+                ? cat.fotos[1]
+                : undefined
+            }
+          />
         </Link>
         <FavoriteButton cat={cat} />
         <span className="coat-tag">{cat.pelagem}</span>
@@ -117,7 +124,8 @@ export default function CatCard({
           </span>
         </div>
         <p className="cat-meta">
-          {cat.faixaEtaria ?? "Fase da vida não informada"} <span>·</span> {cat.sexo}
+          {cat.faixaEtaria ?? "Fase da vida não informada"} <span>·</span>{" "}
+          {cat.sexo}
         </p>
         <p className="cat-description">{cat.historia}</p>
         <CatPersonality cat={cat} />

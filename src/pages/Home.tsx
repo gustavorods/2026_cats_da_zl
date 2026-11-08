@@ -18,7 +18,7 @@ import { ButtonLink, DataBoundary, SectionHeading } from "../components/ui";
 export default function Home() {
   const { cats } = useApp();
   const back = cats.find((cat) => cat.slug === "mijona") ?? cats[0];
-  const front = cats.find((cat) => cat.slug === "chester") ?? cats[1];
+  const front = cats.find((cat) => cat.slug === "miyagi") ?? cats[1];
   const match = cats.find((cat) => cat.slug === "mu") ?? cats[3];
   return (
     <>
@@ -79,8 +79,16 @@ export default function Home() {
           </div>
           <div className="hero-photo photo-front">
             <img
-              src={front?.fotos[0]?.src ?? "/images/cats/placeholder.svg"}
-              alt={front?.fotos[0]?.alt ?? "Gatinho da colônia"}
+              src={
+                front?.fotos[1]?.src ??
+                front?.fotos[0]?.src ??
+                "/images/cats/placeholder.svg"
+              }
+              alt={
+                front?.fotos[1]?.alt ??
+                front?.fotos[0]?.alt ??
+                "Gatinho da colônia"
+              }
               fetchPriority="high"
             />
             <span>

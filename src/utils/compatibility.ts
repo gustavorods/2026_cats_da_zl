@@ -13,6 +13,25 @@ export const emptyPreferences: Preferences = {
   brincadeira: null,
   carinho: null,
 };
+const traitsBeforeStyle = [
+  "sexo",
+  "sociabilidade",
+  "brincadeira",
+  "carinho",
+] as const;
+
+export function catsMatchingPreviousAnswers(
+  cats: Cat[],
+  answers: Partial<Preferences>,
+): Cat[] {
+  return cats.filter(
+    (cat) =>
+      cat.status === "disponivel" &&
+      traitsBeforeStyle.every((key) =>
+        answers[key] == null ? true : cat[key] === answers[key],
+      ),
+  );
+}
 export interface MatchResult {
   cat: Cat;
   score: number | null;

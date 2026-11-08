@@ -13,7 +13,11 @@ import { useApp } from "../hooks/AppProvider";
 import { questions } from "../data/quiz";
 import { coatImages } from "../data/coat-images";
 import type { Coat, Preferences } from "../types/cat";
-import { emptyPreferences, rankCats } from "../utils/compatibility";
+import {
+  catsMatchingPreviousAnswers,
+  emptyPreferences,
+  rankCats,
+} from "../utils/compatibility";
 import {
   ButtonLink,
   DataBoundary,
@@ -28,6 +32,7 @@ export default function Match() {
   const { cats } = useApp();
   const [step, setStep] = useState(-1);
   const [answers, setAnswers] = useState<Partial<Preferences>>({});
+  const matchingCats = catsMatchingPreviousAnswers(cats, answers);
   const title = useRef<HTMLHeadingElement>(null);
   const resultTitle = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -56,7 +61,8 @@ export default function Match() {
             </p>
             <div className="quiz-intro-details">
               <span>
-                <PawPrint size={18} />5 perguntinhas
+                <PawPrint size={18} />
+                Até 5 perguntinhas
               </span>
               <span>
                 <Heart size={18} />
@@ -98,6 +104,12 @@ export default function Match() {
           </PageHeading>
         </div>
         <DemoNotice />
+        {matchingCats.length === 0 && (
+          <p className="notice-box" role="status">
+            Nenhum gatinho corresponde a todas as características escolhidas.
+            Mostramos abaixo os perfis com a maior afinidade possível.
+          </p>
+        )}
         <details className="explanation">
           <summary>Como calculamos a afinidade estimada?</summary>
           <p>
@@ -170,7 +182,22 @@ export default function Match() {
     );
   }
   const question = questions[step];
-  const answered = Object.hasOwn(answers, question.key);
+  const styleOptions =
+    question.key === "pelagem"
+      ? question.options.filter(
+          (option) =>
+            option.value !== null &&
+            matchingCats.some((cat) => cat.pelagem === option.value),
+        )
+      : [];
+  const skipStyle = question.key === "pelagem" && styleOptions.length === 0;
+  const options =
+    question.key === "pelagem"
+      ? styleOptions.length === 1
+        ? styleOptions
+        : [...styleOptions, question.options[question.options.length - 1]]
+      : question.options;
+  const answered = skipStyle || answers[question.key] !== undefined;
   return (
     <div className="container page quiz-page">
       <div className="quiz-top">
@@ -184,65 +211,94 @@ export default function Match() {
         </button>
       </div>
       <div className="quiz-progress-label">
-        <span>Pergunta {step + 1} de 5</span>
+        <span>{skipStyle ? "Etapa final" : `Pergunta ${step + 1} de 5`}</span>
         <span>{Math.round((step / 5) * 100)}% do caminho</span>
       </div>
-      <progress value={step} max={5} aria-label={`Pergunta ${step + 1} de 5`} />
+      <progress
+        value={step}
+        max={5}
+        aria-label={skipStyle ? "Etapa final" : `Pergunta ${step + 1} de 5`}
+      />
       <section className="quiz-step" key={step}>
         <span className="quiz-number">0{step + 1}</span>
         <h1 ref={title} tabIndex={-1} id="question-title">
-          {question.title}
+          {skipStyle
+            ? "Não encontramos gatos com todas essas características"
+            : question.title}
         </h1>
-        <p>{question.description}</p>
-        <fieldset
-          className={`quiz-options ${question.key === "pelagem" ? "coat-options" : ""}`}
-          aria-labelledby="question-title"
-        >
-          <legend className="sr-only">Escolha uma opção</legend>
-          {question.options.map((option, i) => (
-            <label
-              className={`quiz-option ${answered && answers[question.key] === option.value ? "chosen" : ""}`}
-              key={String(option.value)}
-            >
-              <input
-                type="radio"
-                aria-label={option.label}
-                name={question.key}
-                value={String(option.value)}
-                checked={answered && answers[question.key] === option.value}
-                onChange={() =>
-                  setAnswers({ ...answers, [question.key]: option.value })
-                }
-              />
-              {question.key === "pelagem" && option.value !== null ? (
-                <img
-                  src={`/images/cats/${coatImages[option.value as Coat]}.svg`}
-                  alt=""
+        <p>
+          {skipStyle
+            ? "Vamos pular a pergunta sobre pelagem e mostrar a compatibilidade com os outros gatinhos."
+            : question.description}
+        </p>
+        {skipStyle && (
+          <p className="notice-box" role="status">
+            Com base nas respostas anteriores, nenhum gato disponível reúne
+            todas as características que você selecionou. Ainda podemos te
+            mostrar os perfis mais próximos das suas preferências.
+          </p>
+        )}
+        {question.key === "pelagem" && styleOptions.length === 1 && (
+          <p className="notice-box" role="status">
+            Com base nas respostas anteriores, só temos este estilo para você
+            selecionar.
+          </p>
+        )}
+        {!skipStyle && (
+          <fieldset
+            className={`quiz-options ${question.key === "pelagem" ? "coat-options" : ""}`}
+            aria-labelledby="question-title"
+          >
+            <legend className="sr-only">Escolha uma opção</legend>
+            {options.map((option, i) => (
+              <label
+                className={`quiz-option ${answered && answers[question.key] === option.value ? "chosen" : ""}`}
+                key={String(option.value)}
+              >
+                <input
+                  type="radio"
+                  aria-label={option.label}
+                  name={question.key}
+                  value={String(option.value)}
+                  checked={answered && answers[question.key] === option.value}
+                  onChange={() =>
+                    setAnswers((current) => {
+                      const next = { ...current, [question.key]: option.value };
+                      if (question.key !== "pelagem") delete next.pelagem;
+                      return next as Partial<Preferences>;
+                    })
+                  }
                 />
-              ) : (
-                <span className="option-icon">
-                  {option.value === null ? (
-                    <Heart size={23} />
-                  ) : question.key === "sexo" ? (
-                    option.value === "Macho" ? (
-                      "♂"
+                {question.key === "pelagem" && option.value !== null ? (
+                  <img
+                    src={`/images/cats/${coatImages[option.value as Coat]}.svg`}
+                    alt=""
+                  />
+                ) : (
+                  <span className="option-icon">
+                    {option.value === null ? (
+                      <Heart size={23} />
+                    ) : question.key === "sexo" ? (
+                      option.value === "Macho" ? (
+                        "♂"
+                      ) : (
+                        "♀"
+                      )
                     ) : (
-                      "♀"
-                    )
-                  ) : (
-                    <PawPrint size={19 + i * 2} />
+                      <PawPrint size={19 + i * 2} />
+                    )}
+                  </span>
+                )}
+                <span>{option.label}</span>
+                <span className="radio-mark" aria-hidden="true">
+                  {answered && answers[question.key] === option.value && (
+                    <Check size={15} />
                   )}
                 </span>
-              )}
-              <span>{option.label}</span>
-              <span className="radio-mark" aria-hidden="true">
-                {answered && answers[question.key] === option.value && (
-                  <Check size={15} />
-                )}
-              </span>
-            </label>
-          ))}
-        </fieldset>
+              </label>
+            ))}
+          </fieldset>
+        )}
         <div className="quiz-navigation">
           <button
             className="button secondary"

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Heart, Search, SlidersHorizontal, X } from "lucide-react";
-import { coats } from "../types/cat";
+import { availableCoats } from "../types/cat";
 import { useApp } from "../hooks/AppProvider";
 import { defaultFilters, filterCats } from "../utils/filters";
 import {
@@ -31,7 +31,11 @@ export default function Cats() {
       label: "Sexo",
       options: ["Macho", "Fêmea"].map((v) => [v, v]),
     },
-    { key: "pelagem", label: "Pelagem", options: coats.map((v) => [v, v]) },
+    {
+      key: "pelagem",
+      label: "Pelagem",
+      options: availableCoats.map((v) => [v, v]),
+    },
     ...(["sociabilidade", "brincadeira", "carinho"] as const).map((key) => ({
       key,
       label: {

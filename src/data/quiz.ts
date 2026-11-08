@@ -1,4 +1,4 @@
-import { coats } from "../types/cat";
+import { availableCoats } from "../types/cat";
 import type { Preferences } from "../types/cat";
 interface Question {
   key: keyof Preferences;
@@ -19,18 +19,6 @@ export const questions: Question[] = [
     options: [
       { value: "Macho", label: "Macho" },
       { value: "Fêmea", label: "Fêmea" },
-      any,
-    ],
-  },
-  {
-    key: "pelagem",
-    title: "Qual desses estilos de gatinho encanta mais você?",
-    description: "Falamos de pelagens e aparências, não de raças comprovadas.",
-    options: [
-      ...coats.map((value) => ({
-        value,
-        label: value === "Padrão siamês" ? "Siamês / padrão siamês" : value,
-      })),
       any,
     ],
   },
@@ -66,5 +54,17 @@ export const questions: Question[] = [
       "Carinhoso",
       "Muito carinhoso",
     ]),
+  },
+  {
+    key: "pelagem",
+    title: "Qual desses estilos de gatinho encanta mais você?",
+    description: "Falamos de pelagens e aparências, não de raças comprovadas.",
+    options: [
+      ...availableCoats.map((value) => ({
+        value,
+        label: value === "Padrão siamês" ? "Siamês / padrão siamês" : value,
+      })),
+      any,
+    ],
   },
 ];

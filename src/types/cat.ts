@@ -9,6 +9,9 @@ export const coats = [
   "Rajado",
   "Rajado e branco",
 ] as const;
+export const availableCoats = coats.filter(
+  (coat) => coat !== "Laranja" && coat !== "Escaminha",
+);
 export const ages = ["Filhote", "Jovem", "Adulto", "Sênior"] as const;
 export const statuses = {
   disponivel: "Disponível para adoção",

@@ -2,6 +2,7 @@ import { Instagram, Mail, MessageCircle } from "lucide-react";
 import { site } from "../config/site";
 import { whatsappDisplay } from "../utils/whatsapp";
 import { PageHeading, WhatsAppButton } from "../components/ui";
+import { TikTokIcon } from "../components/TikTokIcon";
 export default function Contact() {
   return (
     <div className="container page">
@@ -49,18 +50,21 @@ export default function Contact() {
                 <p>Perfil oficial em breve</p>
               )}
             </article>
+            {site.social.map((s) => (
+              <article className="surface" key={s.url}>
+                <TikTokIcon width={25} height={25} />
+                <h2>TikTok</h2>
+                <a
+                  className="text-link"
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Conhecer nosso perfil
+                </a>
+              </article>
+            ))}
           </div>
-          {site.social.map((s) => (
-            <a
-              className="button secondary"
-              key={s.url}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {s.nome}
-            </a>
-          ))}
         </div>
         <div className="contact-art">
           <img

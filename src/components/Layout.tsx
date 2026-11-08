@@ -1,45 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { ArrowUp, Heart, Menu, PawPrint, X } from "lucide-react";
+import {
+  ArrowUp,
+  Heart,
+  Instagram,
+  Mail,
+  Menu,
+  MessageCircle,
+  PawPrint,
+  X,
+} from "lucide-react";
 import { site } from "../config/site";
 import { useApp } from "../hooks/AppProvider";
 import { DemoNotice } from "./ui";
 import { whatsappDisplay, whatsappUrl } from "../utils/whatsapp";
+import { TikTokIcon } from "./TikTokIcon";
 const navigation = [
   ["/", "Início"],
   ["/gatos", "Conheça os gatos"],
   ["/match", "Match Felino"],
   ["/ajudar", "Como ajudar"],
   ["/sobre", "Sobre nós"],
+  ["/adotar", "Quero adotar"],
+  ["/quem-me-adota", "Quem Me Adota?"],
+  ["/duvidas", "Dúvidas"],
+  ["/contato", "Contato"],
 ];
 export function Logo() {
   return (
     <Link to="/" className="logo" aria-label="Cats da ZL — início">
-      <span className="logo-icon">
-        <svg
-          width="29"
-          height="29"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.9"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path d="M4 11V3l5 4a12 12 0 0 1 6 0l5-4v8c1 1.5 1 3 1 4 0 4-4 6-9 6s-9-2-9-6c0-1 0-2.5 1-4Z" />
-          <path d="M8 12v.5m8-.5v.5" />
-          <path d="m11 16 1 1 1-1m-1 1v1" />
-          <path d="m1 13 6 2m-6 2h6m10-2 6-2m-6 4h6" strokeWidth="1.4" />
-        </svg>
-      </span>
-      <span>
-        cats
-        <span className="logo-small">
-          da ZL<span className="logo-dot">.</span>
-        </span>
-      </span>
+      <svg
+        viewBox="33 37 111 91"
+        width="111"
+        height="91"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          fill="currentColor"
+          fillRule="evenodd"
+          d="M54 41c2-1 4 0 6 2l18 18c7-2 16-2 23 0l18-18c2-2 4-3 6-2 2 1 2 4 2 6v40c0 2 0 4-1 6l12 1v5l-13 1 15 6-2 5-16-5c-6 12-18 18-33 18-16 0-28-6-34-18l-16 5-2-5 15-6-13-1v-5l12-1c-1-2-1-4-1-6V47c0-2 0-5 2-6Z M72 89a5 9 0 1 0 10 0 5 9 0 1 0-10 0Z M95 89a5 9 0 1 0 10 0 5 9 0 1 0-10 0Z"
+        />
+      </svg>
     </Link>
   );
 }
@@ -102,18 +104,11 @@ function Header() {
         hidden={!open}
         aria-label="Navegação no celular"
       >
-        {navigation
-          .concat([
-            ["/adotar", "Quero adotar"],
-            ["/quem-me-adota", "Quem Me Adota?"],
-            ["/duvidas", "Dúvidas"],
-            ["/contato", "Contato"],
-          ])
-          .map(([path, label]) => (
-            <NavLink key={path} to={path} end={path === "/"}>
-              {label}
-            </NavLink>
-          ))}
+        {navigation.map(([path, label]) => (
+          <NavLink key={path} to={path} end={path === "/"}>
+            {label}
+          </NavLink>
+        ))}
       </nav>
     </header>
   );
@@ -152,11 +147,18 @@ function Footer() {
         <div>
           <h2>Um alô faz diferença</h2>
           <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            <MessageCircle size={16} aria-hidden="true" />
             WhatsApp: {whatsappDisplay()}
           </a>
-          {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+          {site.email && (
+            <a href={`mailto:${site.email}`}>
+              <Mail size={16} aria-hidden="true" />
+              {site.email}
+            </a>
+          )}
           {site.instagram && (
             <a href={site.instagram} target="_blank" rel="noopener noreferrer">
+              <Instagram size={16} aria-hidden="true" />
               Instagram: @catsdazl
             </a>
           )}
@@ -167,6 +169,7 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
+              <TikTokIcon width={16} height={16} />
               {s.nome}
             </a>
           ))}
