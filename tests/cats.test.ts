@@ -57,7 +57,7 @@ describe("cadastros reais da colônia", () => {
   });
   it("preserva as fases da vida informadas sem inventar vacinação ou data de atualização", () => {
     expect(cats.map((cat) => cat.faixaEtaria)).toEqual([
-      "Adulta", "Adulta", "Adulta", "Adulto", "Idoso", "Adulto", "Jovem",
+      "Adulta", "Adulto", "Adulta", "Adulto", "Idoso", "Adulto", "Jovem",
     ]);
     for (const cat of cats) {
       expect(cat.vacinado).toBeNull();
