@@ -104,7 +104,7 @@ export default function CatCard({
           <CatImage
             cat={cat}
             photo={
-              cat.slug === "miyagi" || cat.slug === "shalom-harlow"
+              cat.slug === "miyagi"
                 ? cat.fotos[1]
                 : undefined
             }

@@ -48,7 +48,9 @@ export default function CatDetails() {
             <DemoNotice />
             <div className="profile-grid">
               <div className="gallery">
-                <div className="gallery-main">
+                <div
+                  className={`gallery-main${cat.slug === "mijona" && photo === 1 ? " gallery-photo--mijona-second" : ""}`}
+                >
                   <CatImage
                     key={`${cat.id}-${photo}`}
                     cat={cat}
@@ -61,6 +63,11 @@ export default function CatDetails() {
                     {cat.fotos.map((image, i) => (
                       <button
                         key={image.src}
+                        className={
+                          cat.slug === "mijona" && i === 1
+                            ? "gallery-photo--mijona-second"
+                            : undefined
+                        }
                         onClick={() => setPhoto(i)}
                         aria-label={`Ver imagem ${i + 1} de ${cat.nome}`}
                         aria-pressed={photo === i}

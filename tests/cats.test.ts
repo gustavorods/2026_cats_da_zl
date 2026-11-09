@@ -6,7 +6,7 @@ import { rankCats, emptyPreferences } from "../src/utils/compatibility";
 
 describe("cadastros reais da colônia", () => {
   const cats = loadCats();
-  it("carrega os sete relatos e todas as 21 fotos das pastas corretas", () => {
+  it("carrega os sete relatos e todas as 25 fotos das pastas corretas", () => {
     expect(cats.map((cat) => cat.nome)).toEqual([
       "Ângela",
       "Chester",
@@ -16,7 +16,7 @@ describe("cadastros reais da colônia", () => {
       "Scar",
       "Shalom Harlow",
     ]);
-    expect(cats.map((cat) => cat.fotos.length)).toEqual([2, 3, 4, 3, 2, 3, 4]);
+    expect(cats.map((cat) => cat.fotos.length)).toEqual([3, 3, 4, 3, 2, 5, 5]);
     for (const cat of cats) {
       expect(cat.historia).not.toMatch(
         /Site:|Gênero:|Sociável:|Cor:|Convive com/,

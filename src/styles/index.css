@@ -832,8 +832,9 @@ main {
 .cat-card--mijona .cat-card-visual .cat-image img {
   object-position: center 54%;
 }
+.cat-card--angela .cat-card-visual .cat-image img,
 .cat-card--scar .cat-card-visual .cat-image img {
-  transform: scale(1.5);
+  object-position: center 65%;
 }
 .cat-card-visual .favorite-button {
   position: absolute;
@@ -1399,6 +1400,10 @@ select {
   height: 100%;
   width: 100%;
   border-radius: 9px;
+}
+.gallery-photo--mijona-second img {
+  object-fit: cover;
+  object-position: center 8%;
 }
 .profile-intro {
   padding-top: 20px;
