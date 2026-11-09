@@ -35,8 +35,8 @@ export default function About() {
           </ButtonLink>
         </div>
         <img
-          src="/images/cats/escaminha-cozy.svg"
-          alt="Ilustração demonstrativa de uma gatinha escaminha"
+          src="/images/colonia/sobre.jpeg"
+          alt="Gatos da colônia reunidos ao redor de um prato de comida"
         />
       </div>
       <div className="info-grid mission-grid">

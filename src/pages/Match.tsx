@@ -53,7 +53,7 @@ export default function Match() {
               SEU PRÓXIMO AMIGO PODE TER BIGODES
             </span>
             <h1>
-              Descubra seu <span className="pink">CatMach!</span>
+              Descubra seu <span className="pink">MiauMach!</span>
             </h1>
             <p>
               Todo gatinho tem uma personalidade única. Vamos te ajudar a
@@ -77,8 +77,8 @@ export default function Match() {
           </div>
           <div className="quiz-intro-art">
             <img
-              src="/images/cats/laranja-cozy.svg"
-              alt="Ilustração de um gato laranja em seu cantinho"
+              src="/images/colonia/match.jpeg"
+              alt="Gato siamês de olhos azuis descansando à sombra de um carro"
             />
             <span>
               <Heart fill="currentColor" size={22} /> Será que a gente combina?
@@ -106,8 +106,8 @@ export default function Match() {
         <DemoNotice />
         {matchingCats.length === 0 && (
           <p className="notice-box" role="status">
-            Nenhum gatinho corresponde a todas as características escolhidas.
-            Mostramos abaixo os perfis com a maior afinidade possível.
+            Não encontramos uma combinação exata, mas esses gatinhos têm muito
+            em comum com o que você procura!
           </p>
         )}
         <details className="explanation">
@@ -175,7 +175,7 @@ export default function Match() {
             Ver todos os gatos
           </ButtonLink>
           <Link to="/quem-me-adota" className="text-link">
-            Explorar no Quem Me Adota? <ArrowRight size={17} />
+            Explorar no Miau ou Passo? <ArrowRight size={17} />
           </Link>
         </div>
       </div>
@@ -203,7 +203,7 @@ export default function Match() {
       <div className="quiz-top">
         <Link to="/match" onClick={reset} className="text-link">
           <PawPrint size={18} />
-          CatMach
+          MiauMach
         </Link>
         <button className="text-link" onClick={reset}>
           <RotateCcw size={16} />
@@ -223,7 +223,7 @@ export default function Match() {
         <span className="quiz-number">0{step + 1}</span>
         <h1 ref={title} tabIndex={-1} id="question-title">
           {skipStyle
-            ? "Não encontramos gatos com todas essas características"
+            ? "Não encontramos um gatinho exatamente como você imaginou!"
             : question.title}
         </h1>
         <p>
@@ -233,9 +233,9 @@ export default function Match() {
         </p>
         {skipStyle && (
           <p className="notice-box" role="status">
-            Com base nas respostas anteriores, nenhum gato disponível reúne
-            todas as características que você selecionou. Ainda podemos te
-            mostrar os perfis mais próximos das suas preferências.
+            Mas calma, ainda temos boas notícias! Encontramos outros gatinhos
+            que combinam com algumas das suas preferências e podem conquistar
+            seu coração. Que tal conhecê-los?
           </p>
         )}
         {question.key === "pelagem" && styleOptions.length === 1 && (

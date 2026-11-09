@@ -77,11 +77,11 @@ export default function QuemMeAdota() {
   return (
     <div className="container page quem-me-adota-page">
       <PageHeading
-        eyebrow="QUEM ME ADOTA?"
-        title="Um swipe, um miau, uma nova história!"
+        eyebrow="MIAU OU PASSO?"
+        title="Seu próximo amor pode ter quarto patas!"
       >
-        Deslize os cartões, conheça os gatinhos e favorite aqueles que
-        conquistarem seu coração.
+        Deslize, conheça nossa gatinhos e dê um coração para aqueles que
+        conquistaram o seu
       </PageHeading>
       <DemoNotice />
       <div className="quem-me-adota-top">

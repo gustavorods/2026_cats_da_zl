@@ -1,6 +1,6 @@
 # Dados dos gatinhos
 
-O site lê os arquivos de `src/cats/` com `import.meta.glob` do Vite. Catálogo, perfis, favoritos, match e Quem Me Adota? usam a mesma fonte. A home também mostra fotos e nomes reais. Não há backend.
+O site lê os arquivos de `src/cats/` com `import.meta.glob` do Vite. Catálogo, perfis, favoritos, match e Miau ou Passo? usam a mesma fonte. A home também mostra fotos e nomes reais. Não há backend.
 
 ## Adicionar ou atualizar um gatinho
 
@@ -48,7 +48,7 @@ O nome gera o identificador e a URL sem acentos, por exemplo `Ângela` → `/gat
 - Convivência: `Convive com gatos: Sim` e `Convive com crianças: Sim` estão confirmados para todos os gatos atuais.
 - Status: `disponivel`, `em_processo`, `adotado` ou `indisponivel`.
 
-**Sem `Status:`, o cadastro é considerado disponível.** Os sete relatos recebidos não indicavam status; todos entraram com esse padrão. Confirme e atualize o campo conforme a situação de cada gato. Apenas disponíveis aparecem no match e no Quem Me Adota?. Os demais continuam no catálogo, sem botão de adoção.
+**Sem `Status:`, o cadastro é considerado disponível.** Os sete relatos recebidos não indicavam status; todos entraram com esse padrão. Confirme e atualize o campo conforme a situação de cada gato. Apenas disponíveis aparecem no match e no Miau ou Passo?. Os demais continuam no catálogo, sem botão de adoção.
 
 A fase da vida não foi fornecida nos relatos atuais e permanece como `null`. Vacinação, vermifugação, convivência com cães, necessidades especiais e data de atualização não foram fornecidas e ficam como `null`. O carregador não estima esses dados pelas fotografias ou pelo tom das histórias. Para acrescentar esses campos futuramente, amplie o adaptador em `src/utils/cat-description.ts` e a cobertura em `tests/cats.test.ts`.
 

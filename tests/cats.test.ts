@@ -44,7 +44,7 @@ describe("cadastros reais da colônia", () => {
       ]),
     ).toEqual([
       ["Fêmea", "Branco", 2, 2, 3],
-      ["Macho", "Rajado e branco", 3, 2, 2],
+      ["Macho", "Frajola", 3, 2, 2],
       ["Fêmea", "Rajado", 3, 2, 3],
       ["Macho", "Rajado e branco", 2, 2, 2],
       ["Macho", "Frajola", 3, 2, 3],
@@ -55,9 +55,11 @@ describe("cadastros reais da colônia", () => {
       "Sharlow",
     );
   });
-  it("não inventa fase da vida, vacinação ou data de atualização", () => {
+  it("preserva as fases da vida informadas sem inventar vacinação ou data de atualização", () => {
+    expect(cats.map((cat) => cat.faixaEtaria)).toEqual([
+      "Adulta", "Adulto", "Adulta", "Adulto", "Idoso", "Adulto", "Jovem",
+    ]);
     for (const cat of cats) {
-      expect(cat.faixaEtaria).toBeNull();
       expect(cat.vacinado).toBeNull();
       expect(cat.vermifugado).toBeNull();
       expect(cat.dataAtualizacao).toBeNull();

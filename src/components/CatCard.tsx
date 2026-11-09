@@ -125,7 +125,12 @@ export default function CatCard({
         </div>
         <p className="cat-meta">
           {cat.faixaEtaria ?? "Fase da vida não informada"} <span>·</span>{" "}
-          {cat.sexo}
+          {cat.sexo} <span>·</span>{" "}
+          {cat.pelagem === "Branco" && cat.sexo === "Fêmea"
+            ? "Branca"
+            : cat.pelagem === "Rajado e branco"
+              ? "Tigrado e branco"
+              : cat.pelagem}
         </p>
         <p className="cat-description">{cat.historia}</p>
         <CatPersonality cat={cat} />

@@ -171,17 +171,17 @@ test("sem combinação exata, pula a pelagem e mostra afinidades próximas", asy
 });
 
 for (const route of ["/tinder", "/encontro-felino"]) {
-  test(`${route} redireciona para Quem Me Adota?`, async ({ page }) => {
+  test(`${route} redireciona para Miau ou Passo?`, async ({ page }) => {
     await page.goto(route);
     await expect(page).toHaveURL(/\/quem-me-adota$/);
-    await expect(page).toHaveTitle("Quem Me Adota? | Cats da ZL");
+    await expect(page).toHaveTitle("Miau ou Passo? | Cats da ZL");
     await expect(page.locator(".page-heading .eyebrow")).toHaveText(
-      "QUEM ME ADOTA?",
+      "MIAU OU PASSO?",
     );
   });
 }
 
-test("Quem Me Adota? permite favoritar, desfazer sem perder favorito anterior, passar e recomeçar", async ({
+test("Miau ou Passo? permite favoritar, desfazer sem perder favorito anterior, passar e recomeçar", async ({
   page,
 }) => {
   await page.goto("/quem-me-adota");

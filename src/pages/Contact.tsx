@@ -68,8 +68,8 @@ export default function Contact() {
         </div>
         <div className="contact-art">
           <img
-            src="/images/cats/preto-cozy.svg"
-            alt="Ilustração de uma gatinha preta esperando uma visita"
+            src="/images/colonia/contato.jpeg"
+            alt="Gato de pelagem clara e olhos azuis caminhando pela colônia"
           />
           <span>
             Tem sempre uma boa

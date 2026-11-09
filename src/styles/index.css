@@ -637,6 +637,7 @@ main {
   color: #6b465c;
 }
 .photo-back {
+  z-index: 1;
   right: 0;
   top: 14px;
   width: 52%;
@@ -667,6 +668,7 @@ main {
 }
 .hero-sticker {
   position: absolute;
+  z-index: 2;
   right: -5px;
   bottom: 85px;
   background: #fffaf0;
@@ -1519,6 +1521,9 @@ select {
   transform: rotate(5deg);
 }
 .quiz-intro-art img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: 200px 200px 32px 32px;
 }
 .quiz-intro-art > span {
@@ -1914,6 +1919,9 @@ progress::-moz-progress-bar {
   position: relative;
 }
 .adoption-art img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: 180px 180px 25px 25px;
 }
 .adoption-art > span {
@@ -2059,6 +2067,7 @@ progress::-moz-progress-bar {
   font-size: 15px;
 }
 .about-intro img {
+  object-fit: cover;
   border-radius: 150px 150px 25px 25px;
   transform: rotate(3deg);
   max-height: 430px;
@@ -2180,6 +2189,10 @@ progress::-moz-progress-bar {
   padding: 0 12px;
 }
 .contact-art img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 40% center;
   border-radius: 200px 200px 25px 25px;
   transform: rotate(5deg);
 }

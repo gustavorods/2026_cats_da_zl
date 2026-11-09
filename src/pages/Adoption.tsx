@@ -54,8 +54,8 @@ export default function Adoption() {
         </div>
         <div className="adoption-art">
           <img
-            src="/images/cats/frajola-cozy.svg"
-            alt="Ilustração demonstrativa de um gato frajola em uma almofada"
+            src="/images/colonia/adotar.jpeg"
+            alt="Dois gatos pretos e brancos sentados juntos na colônia"
           />
           <span>
             Um lar seguro.
