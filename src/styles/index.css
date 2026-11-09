@@ -1375,6 +1375,9 @@ select {
   gap: 55px;
   margin-top: 34px;
 }
+.gallery {
+  min-width: 0;
+}
 .gallery-main {
   border-radius: 160px 160px 25px 25px;
   overflow: hidden;
@@ -1382,10 +1385,12 @@ select {
 }
 .gallery-thumbs {
   display: flex;
+  flex-wrap: wrap;
   gap: 13px;
   margin-top: 18px;
 }
 .gallery-thumbs button {
+  flex-shrink: 0;
   width: 85px;
   aspect-ratio: 1;
   border: 2px solid transparent;
@@ -1404,6 +1409,11 @@ select {
 .gallery-photo--mijona-second img {
   object-fit: cover;
   object-position: center 8%;
+  transform: scale(1.15);
+  transform-origin: center bottom;
+}
+.gallery-thumbs .gallery-photo--mijona-second {
+  overflow: hidden;
 }
 .profile-intro {
   padding-top: 20px;
